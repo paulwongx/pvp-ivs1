@@ -9,7 +9,7 @@ function App() {
 	return (
 		<div className='App'>
 			<header className='App-header'>
-				<h1>Snorlax's Body Slammin PVP IV's</h1>
+				<h1>Snorlax's Body Slammin' PVP IVs</h1>
 				<div onLoad={() => console.log('Hello World')}></div>
 				<p>
 					Edit <code>src/App.js</code> and save to reload.
