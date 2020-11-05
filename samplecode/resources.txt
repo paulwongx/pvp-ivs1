@@ -1,0 +1,17 @@
+PVPIV Spreadsheet (Original):
+https://docs.google.com/spreadsheets/d/1FRbUGH1Cgp19hA7o8x1W74RQm912TMb6X0H1o102zEk/edit#gid=696474041
+
+PVPIV Spreadsheet (Copy):
+https://docs.google.com/spreadsheets/d/1yaMFnLMRom0bomOQC5aS29Rjrl5PpMHhsvWiMEQQV0s/edit#gid=696474041
+
+Go Stadium PVP IV Website:
+https://www.stadiumgaming.gg/rank-checker
+
+Dan Conley's PVP IV Spread:
+https://danconley.net/ivspread/
+
+- Stores Gamemaster data in localstorage
+
+PVPoke.com
+
+- Does NOT store Gamemaster data in localstorage

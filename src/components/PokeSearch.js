@@ -1,33 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import './Ivs.css';
-//const GameMaster = require('../assets/data/gamemaster.json');
+import 'components/PokeSearch.css';
 
-function Ivs() {
+const gameMaster = require(`./gamemaster.json`);
+const pokemonList = gameMaster.data.pokemon;
+
+function PokeSearch() {
 	const [searchStr, setSearchStr] = useState('');
-	//const pokemonList = JSON.parse(GameMaster.pokemon);
-
-    const pokemonList = [
-        {name:'Abomasnow', value:'abomasnow', type1:'grass', type2:'ice'},
-        {name:'Abomasnow (Shadow)', value:'abomasnow_shadow', type1:'grass', type2:'ice'},
-        {name:'Abra', value:'abra', type1:'psychic', type2:'none'},
-        {name:'Abra (Shadow)', value:'abra_shadow', type1:'grass', type2:'ice'}
-    ];
+    const [matches, setMatches] = useState(pokemonList);
 
     useEffect(() => {
         console.log(searchStr);
         if (searchStr === '') return;
         let regex = new RegExp(`^${searchStr}`, 'i');
-        let matches = pokemonList.filter(pkmn => regex.test(pkmn.name));
+        setMatches(pokemonList.filter(pkmn => regex.test(pkmn.speciesId)));
         console.log(matches);
-        document.getElementsByClassName('poke-select')[0].value = matches[0].value;
+        if (matches.length > 0) {
+            document.getElementsByClassName('poke-select')[0].value = matches[0].value;
+        };
+
     },[searchStr]);
 
 	return (
 		<div>
 			<div className='search-container'>
 				<div className='poke-image'></div>
+				<div className='test1'>{searchStr.length}</div>
+
 				<h3>Select your Pokemon</h3>
-                <h2 className='test'></h2>
 				<input
 					className='poke-search'
                     onChange={e=>setSearchStr(e.target.value)}
@@ -52,9 +51,9 @@ function Ivs() {
 					<option disabled selected value>
 						Select a Pokemon
 					</option>
-                    {pokemonList.map(pokemon => {
-                        return (<option value={pokemon.value} type-1={pokemon.type1} type-2={pokemon.type2}>
-                                    {pokemon.name}
+                    {matches.map(pokemon => {
+                        return (<option value={pokemon.speciesName}>
+                                    {pokemon.speciesName}
                                 </option>);
                     })}
 					{/* <option value='abomasnow' type-1='grass' type-2='ice'>
@@ -81,29 +80,41 @@ function Ivs() {
 				>
 					<a href='#' onClick={e => e.preventDefault()}>
 						<img
-							src={require('../assets/img/combat_league_default_great.png')}
+							src={require('images/great_league.png')}
 							width='175em'
 							alt='Great League'
 						/>
 					</a>
 					<a href='#' onClick={e => e.preventDefault()}>
 						<img
-							src={require('../assets/img/combat_league_default_ultra.png')}
+							src={require('images/ultra_league.png')}
 							width='175em'
 							alt='Ultra League'
 						/>
 					</a>
 					<a href='#' onClick={e => e.preventDefault()}>
 						<img
-							src={require('../assets/img/combat_league_default_master.png')}
+							src={require('images/master_league.png')}
 							width='175em'
 							alt='Master League'
 						/>
 					</a>
 				</div>
 			</div>
+            <div class='table'></div>
 		</div>
 	);
 }
 
-export default Ivs;
+export default PokeSearch;
+
+
+
+
+// OLD UNUSED CODE
+    // const pokemonList = [
+    //     {speciesId:'Abomasnow', value:'abomasnow', type1:'grass', type2:'ice'},
+    //     {speciesId:'Abomasnow (Shadow)', value:'abomasnow_shadow', type1:'grass', type2:'ice'},
+    //     {speciesId:'Abra', value:'abra', type1:'psychic', type2:'none'},
+    //     {speciesId:'Abra (Shadow)', value:'abra_shadow', type1:'grass', type2:'ice'}
+    // ];

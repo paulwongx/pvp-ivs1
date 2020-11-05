@@ -1,9 +1,9 @@
 import React from 'react';
-import './App.css';
+import 'App.css';
 
 // import views
-import Footer from './components/Footer.js';
-import Ivs from './components/Ivs.js';
+import Footer from 'components/Footer.js';
+import PokeSearch from 'components/PokeSearch.js';
 
 function App() {
 	return (
@@ -12,11 +12,11 @@ function App() {
 				<h1>Snorlax's Body Slammin' PVP IVs</h1>
 				<div onLoad={() => console.log('Hello World')}></div>
 				<p>
-					Edit <code>src/App.js</code> and save to reload.
+					A tool with UI in mind for Pokemon PVP stats.
 				</p>
 			</header>
 			<body>
-                <Ivs/>
+                <PokeSearch/>
 			</body>
             <Footer/>
 		</div>
