@@ -46,7 +46,7 @@ if is_level41 == false:
 1. Create function that creates a json object with approx 135,000 entries (15 x 15 x 15 x 40) which are the table results of a Pokemon - DONE
     - Create a function to get the cp of a Pokemon - DONE
     - Create a function to pull the GameMaster from the github page - DONE
-    - Create a function to pull the specific Pokemon data from the GameMaster
+    - Create a function to pull the specific Pokemon data from the GameMaster - DONE
 
 2. On load...
     - Gamemaster is fetched from Github

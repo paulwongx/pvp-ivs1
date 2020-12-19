@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'App.css';
 
 // import views
 import Footer from 'components/Footer.js';
-import PokeSearch from 'components/PokeSearch.js';
+import Search from 'components/Search.js';
+import Results from 'components/Results.js';
+
+export const PokemonContext = React.createContext();
 
 function App() {
+    const [pokemonContext, setPokemonContext] = useState({});
+
 	return (
 		<div className='App'>
 			<header className='App-header'>
@@ -15,9 +20,13 @@ function App() {
 					A tool with UI in mind for Pokemon PVP stats.
 				</p>
 			</header>
-			<body>
-                <PokeSearch/>
-			</body>
+			<div className='body'>
+                <PokemonContext.Provider value={[pokemonContext, setPokemonContext]}>
+                    <h1>{PokemonContext.value}</h1>
+                    <Search/>
+                    <Results />
+                </PokemonContext.Provider>
+			</div>
             <Footer/>
 		</div>
 	);

@@ -1,0 +1,29 @@
+.results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table {
+    box-sizing: border-box;
+    width: 80vw;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+.table, th, td {
+    border: 1px solid white;
+}
+
+th, td {
+    padding: auto 1rem;
+    width: calc(100%/9);
+}
+
+.table tbody tr:nth-child(1) {
+    background-color: gray;
+}
+
+.output-table {
+    display: inline;
+}

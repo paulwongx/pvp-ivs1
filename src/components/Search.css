@@ -1,0 +1,17 @@
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-container button {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: lightgreen;
+    width: 50vw;
+    padding: 1rem 0rem;
+    font-size: 1em;
+    margin: 0 0 60px 0;
+}

@@ -1,5 +1,6 @@
 const axios = require('axios');
-let gameMaster = require(`./gamemaster.json`);
+const gameMaster = require(`./gamemaster.json`);
+const fs = require('fs');
 
 const cpm = [ 0.094, 0.1351374318, 0.16639787, 0.192650919, 0.21573247, 0.2365726613, 0.25572005, 0.2735303812, 0.29024988, 0.3060573775, 0.3210876, 0.3354450362, 0.34921268, 0.3624577511, 0.3752356, 0.387592416, 0.39956728, 0.4111935514, 0.4225, 0.4329264091, 0.44310755, 0.4530599591, 0.4627984, 0.472336093, 0.48168495, 0.4908558003, 0.49985844, 0.508701765, 0.51739395, 0.5259425113, 0.5343543, 0.5426357375, 0.5507927, 0.5588305862, 0.5667545, 0.5745691333, 0.5822789, 0.5898879072, 0.5974, 0.6048236651, 0.6121573, 0.6194041216, 0.6265671, 0.6336491432, 0.64065295, 0.6475809666, 0.65443563, 0.6612192524, 0.667934, 0.6745818959, 0.6811649, 0.6876849038, 0.69414365, 0.70054287, 0.7068842, 0.7131691091, 0.7193991, 0.7255756136, 0.7317, 0.7347410093, 0.7377695, 0.7407855938, 0.74378943, 0.7467812109, 0.74976104, 0.7527290867, 0.7556855, 0.7586303683, 0.76156384, 0.7644860647, 0.76739717, 0.7702972656, 0.7731865, 0.7760649616, 0.77893275, 0.7817900548, 0.784637, 0.7874736075, 0.7903, ];
 
@@ -25,11 +26,11 @@ function generateTable(pokemon) { // speciesId, atk = 0, def = 0, hp = 0, league
                     let sp = cp(stats);
 
                     if (sp.cp <= 1500) {
-                        greatTable.push({ivs: {atk, def, hp}, level, ...sp});
+                        greatTable.push({ivs: {atk, def, hp}, "level": level/2+1, ...sp});
                     } else if (sp.cp <= 2500) {
-                        ultraTable.push({ivs: {atk, def, hp}, level, ...sp});
+                        ultraTable.push({ivs: {atk, def, hp}, "level": level/2+1, ...sp});
                     } else {
-                        masterTable.push({ivs: {atk, def, hp}, level, ...sp});
+                        masterTable.push({ivs: {atk, def, hp}, "level": level/2+1, ...sp});
                     }
                 }
 
@@ -41,7 +42,21 @@ function generateTable(pokemon) { // speciesId, atk = 0, def = 0, hp = 0, league
     ultraTable.sort((a,b) => (a.sp > b.sp) ? -1 : 1);
     masterTable.sort((a,b) => (a.sp > b.sp) ? -1 : 1);
 
-    // fs.writeFileSync('greatTable.json', JSON.stringify(greatTable));
+    // Add percentages for each table
+    for (let i=0; i<greatTable.length; i++) {
+        greatTable[i]['percentage'] = (Math.round(greatTable[i]['sp'] / greatTable[0]['sp'] * 10000)/100).toFixed(2);
+    }
+
+    for (let i=0; i<ultraTable.length; i++) {
+        ultraTable[i]['percentage'] = (Math.round(ultraTable[i]['sp'] / ultraTable[0]['sp'] * 10000)/100).toFixed(2);
+    }
+
+    for (let i=0; i<masterTable.length; i++) {
+        masterTable[i]['percentage'] = (Math.round(masterTable[i]['sp'] / masterTable[0]['sp'] * 10000)/100).toFixed(2);
+    }
+
+    greatTable.splice(50,greatTable.length-50);
+    fs.writeFileSync('greatTable.json', JSON.stringify(greatTable));
     // fs.writeFileSync('ultraTable.json', JSON.stringify(ultraTable));
     // fs.writeFileSync('masterTable.json', JSON.stringify(masterTable));
 	return greatTable;
@@ -55,10 +70,13 @@ function cp(stats) {
 	let attack = (atk + ivs.atk) * cpm[level],
 		defense = (def + ivs.def) * cpm[level],
         stamina = (hp + ivs.hp) * cpm[level],
-        sp = attack * defense * stamina;
+        cp = Math.max(Math.floor(attack * defense**0.5 * stamina**0.5 / 10), 10);
 
-	let cp = Math.max(Math.floor(attack * defense**0.5 * stamina**0.5 / 10), 10);
-    hp = Math.floor(stamina);
+    stamina = Math.floor(stamina);
+    let sp = Math.round(attack * defense * stamina)/1000;
+
+    attack = (Math.round(attack*100)/100).toFixed(2);
+    defense = (Math.round(defense*100)/100).toFixed(2);
 
     return { cp, attack, defense, stamina, sp };
 
@@ -102,23 +120,22 @@ let swampert = {
     "searchPriority": 31
 };
 
-// generateTable(swampert);
+generateTable(swampert);
 
-const pokemonList = gameMaster.data.pokemon;
+// const pokemonList = gameMaster.data.pokemon;
 
-let searchStr = 'bulb'
-let regex = new RegExp(`^${searchStr}`, 'i');
-let matches = pokemonList.filter(pkmn => regex.test(pkmn.speciesId));
+// let searchStr = 'bulb'
+// let regex = new RegExp(`^${searchStr}`, 'i');
+// let matches = pokemonList.filter(pkmn => regex.test(pkmn.speciesId));
 
-console.log(matches);
+// console.log(matches);
 
+// a = 121.11;
+// b = 110.05;
+// c = 139;
 
-
-
-
-
-
-
+// num = (Math.round(a*b*c)/1000).toFixed(3);
+// console.log(num);
 
 // Removed code
 
